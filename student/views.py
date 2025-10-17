@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Information
 # # Create your views here.
@@ -75,5 +75,65 @@ def show(request):
     students=Information.objects.all()
     output=""
     for info in students:
-        output += f"id : {info.id} \t name : {info.name} \t rolll : {info.roll} \t  age : {info.age} \t dept {info.dept} \n"
+        output += f"id : {info.id} \t name : {info.name} \t roll : {info.roll} \t  age : {info.age} \t dept {info.dept} \n"
     return HttpResponse (f"<pre>{output}</pre>")
+def page(request):
+    info_list=Information.objects.all()
+    if info_list :
+        context={
+            "data":info_list
+        }
+        return render (request,"student.html",context)
+    else:
+        return HttpResponse ("not availavl data form info_list")
+    
+    
+def get_data_by_id(request,id):
+    print("request",request)
+    info_list=Information.objects.get(id=id)
+    #print("d",info_list)
+    context={
+        "items":info_list,
+        "html_title":"Html page"
+        
+    }
+    return render(request,"view.html",context) 
+
+def add_items(request):
+    if request.method=='POST': 
+        name=request.POST.get("name")
+        roll=request.POST.get("roll")
+        age=request.POST.get("age")
+        dept=request.POST.get("dept")
+        print(name,roll,age,dept)
+
+        data =Information(name=name,roll=roll,age=age,dept=dept)
+        data.save()
+        print("data is save d successfully")
+        return redirect("html_page")
+    return render (request,"add_items.html")
+
+def update_html(request,id):
+    info=Information.objects.get(id=id)
+    if request.method=="POST":
+        name=request.POST.get("name")
+        roll=request.POST.get("roll")
+        age=request.POST.get("age")
+        dept=request.POST.get("dept")
+        
+        info.name=name
+        info.roll=roll
+        info.age=age
+        info.dept=dept
+        info.save()
+        return redirect ("page")
+    
+    context={
+        "id":info.id,
+        "name":info.name,
+        "roll":info.roll,
+        "age":info.age,
+        "dept":info.dept
+    }
+    return render (request,"edit.html", context)
+    

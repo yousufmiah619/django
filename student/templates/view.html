@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stuednt infomation</title>
+</head>
+<body>
+    <h1>view student infomation</h1>
+    {% if items %}
+    <ul>
+        <li>ID : {{items.id}} </li>
+        <li>Name : {{items.name}} </li>
+        <li>Roll : {{items.roll}}</li>
+        <li>Age : {{items.age}}</li>
+        <li>Dept : {{items.dept}}</li>
+    </ul>
+    {% else %}
+    <h2>NO items found</h2>
+    {% endif %}
+</body>
+</html> 
