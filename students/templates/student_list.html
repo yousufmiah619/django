@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student list</title>
+</head>
+<body>
+    <h2>all Student infomation</h2>
+    <ul>
+        {% for info in data %}
+        <li> ID : {{info.id}} </li>
+        <li> name : {{info.name}} </li>
+        <li> age : {{info.age}} </li>
+        <li> course : {{info.course}}</li>
+        <br><br>
+        {% endfor %}
+    </ul>
+</body>
+</html>
